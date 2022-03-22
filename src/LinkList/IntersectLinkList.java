@@ -31,4 +31,99 @@ public class IntersectLinkList {
         return n1;
     }
 
+    // 如果两个链表都无环，返回第一个相交节点，如果不相交，返回 null
+    public static Node noLoop (Node head1, Node head2) {
+        if (head1 == null || head2 == null) {
+            return null;
+        }
+        Node cur1 = head1;
+        Node cur2 = head2;
+        int n = 0;
+        while (cur1.next != null) {
+            n ++;
+            cur1 = cur1.next;
+        }
+        while (cur2.next != null) {
+            n --;
+            cur2 = cur2.next;
+        }
+        // 两个链表相交，它们最后一个节点必然是同一个
+        if (cur1 != cur2) {
+            return null;
+        }
+        cur1 = n > 0 ? head1 : head2; // 判断两个俩表谁长，长的指向 cur1
+        cur2 = cur1 == head1 ? head2 : head1;  // 短的指向 cur2
+        n = Math.abs(n);
+        // 长俩表先走两个链表长度的差值步
+        while (n != 0) {
+            n --;
+            cur1 = cur1.next;
+        }
+        // 之后两个链表一起走
+        // 第一次相等时即为第一个相交点
+        while (cur1 != cur2) {
+            cur1 = cur1.next;
+            cur2 = cur2.next;
+        }
+        return cur1;
+    }
+
+    // 两个有环链表，返回第一个相交节点，不相交则返回 null
+
+    /**
+     *
+     * @param head1 链表1
+     * @param loop1 链表1的入环节点
+     * @param head2 链表2
+     * @param loop2 链表2的入环节点
+     * @return Node
+     */
+    public static Node bothLoop(Node head1, Node loop1, Node head2, Node loop2) {
+        Node cur1 = null;
+        Node cur2 = null;
+        // 共用一个入环点
+        if (loop1 == loop2) {
+            cur1 = head1;
+            cur2 = head2;
+            int n = 0;
+            // 以入环点为结束点
+            while (cur1 != loop1) {
+                n ++;
+                cur1 = cur1.next;
+            }
+            while (cur2 != loop2) {
+                n --;
+                cur2 = cur2.next;
+            }
+            cur1 = n > 0 ? head1 : head2;
+            cur2 = cur1 == head1 ? head2 : head1;
+            n = Math.abs(n);
+            // 长俩表先走两个链表长度的差值步
+            while (n != 0) {
+                n --;
+                cur1 = cur1.next;
+            }
+            // 之后两个链表一起走
+            // 第一次相等时即为第一个相交点
+            while (cur1 != cur2) {
+                cur1 = cur1.next;
+                cur2 = cur2.next;
+            }
+            return cur1;
+            // 不共用入环点
+            // 有两种情况 1 两个环互不相关，即两个链表不相交
+            // 2 共用一个环，但不有两个不同的入环点，返回任意一个入环点都对
+        } else {
+            // 从任意一个入环点开始往下走
+            cur1 = loop1.next;
+            // 当再次回到入环点时，如果遇到另一个入环点，则是情况2，否则是情况1
+            while (cur1 != loop1) {
+                if (cur1 == loop2) {
+                    return loop1;
+                }
+            }
+            return null;
+        }
+    }
+
 }
