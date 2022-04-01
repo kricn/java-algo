@@ -130,14 +130,18 @@ public class IntersectLinkList {
         if (head1 == null || head2 == null) {
             return null;
         }
+        // 获取链表的入环点
         Node loop1 = getLoopNode(head1);
         Node loop2 = getLoopNode(head2);
+        // 两个都无环时
         if (loop1 == null && loop2 == null) {
             return noLoop(head1, head2);
         }
+        // 两个都有环时
         if (loop1 != null && loop2 != null) {
             return bothLoop(head1, loop1, head2, loop2);
         }
+        // 不存在一个有环一个无环的情况
         return null;
     }
 
