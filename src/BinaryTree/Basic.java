@@ -1,5 +1,8 @@
 package BinaryTree;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -86,6 +89,57 @@ public class Basic {
                     System.out.print(head + " ");
                     head = head.right;
                 }
+            }
+        }
+    }
+
+    // 宽度优先遍历的基础上找到最宽的那一层
+    public static void widthOrder(Node head) {
+        if (head == null) {
+            return ;
+        }
+        // 用队列
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(head);
+        // 记录层级的 hash map
+        HashMap<Node, Integer> levelMap = new HashMap<>();
+        levelMap.put(head, 1);
+        // 当前层级
+        int curLevel = 1;
+        // 当前层有多少个节点
+        int curLevelNodes = 0;
+        // 当前层级最大的宽度
+        int max = Integer.MIN_VALUE;
+        while (!queue.isEmpty()) {
+            // 打印的同时将左右节点加入队列
+            Node cur = queue.poll();
+            // 出队列时，从 hash map 中获取当前的层级
+            int curNodeLevel = levelMap.get(cur);
+            // 如果和当前层一致，说明是在同一层
+            if (curLevel == curNodeLevel) {
+                // 则说明当前节点还在同一层
+                // 更新当前层节点数
+                curLevelNodes ++;
+            } else {
+                // 进入下一层
+                curLevel ++;
+                // 结算上一层
+                max = Math.max(max, curLevelNodes);
+                // 重置当前层节点
+                curLevelNodes = 0;
+            }
+            // System.out.print(cur.value);
+            // 先放左
+            if (cur.left != null) {
+                // 入队列时 hash map 记录层级
+                levelMap.put(cur.left, curLevelNodes + 1);
+                queue.add(cur.left);
+            }
+            // 再放右
+            if (cur.right != null) {
+                // 入队列时 hash map 记录层级
+                levelMap.put(cur.right, curLevelNodes + 1);
+                queue.add(cur.right);
             }
         }
     }
