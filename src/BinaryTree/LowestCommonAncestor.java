@@ -45,6 +45,7 @@ public class LowestCommonAncestor {
      * 分两种情况
      * 1、o1 和 o2 其中有一个为另一个的父节点，这样在递归到其中一个时，会直接返回“父节点”
      * 2、两两节点需要通过往上递归找到交集的
+     * 见图片 /file/最先公共节点.png
      */
     public static Node lca2 (Node head, Node o1, Node o2) {
         // 满足条件1
