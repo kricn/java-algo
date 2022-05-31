@@ -24,6 +24,7 @@ public class HeapSort {
         int left = index * 2 + 1;  // 左节点下标
         while(left < heapSize) { // 还有子节点的时候
             // 比较两个子节点
+            // left + 1 < heapSize 表示有右节点
             int largest = left + 1 < heapSize && arr[left + 1] > arr[left]
                             ? left + 1 : left;
             // 较大的子节点和父节点比较
@@ -60,21 +61,27 @@ public class HeapSort {
     }
 
     /**
-     * 已知一个几乎有序的数组，几乎有序是指，如果把数组排号，每个元素移动的距离可以不操作k，并且k相对于数组来说比较小，
+     * 已知一个几乎有序的数组，几乎有序是指，如果把数组排号，每个元素移动的距离可以不超过k，并且k相对于数组来说比较小，
      * 请选择一个合适的算法针对这个数组进行排序
      */
     public static void sortedArrDistanceLessK(int[] arr, int k) {
         // 使用java中的优先队列，形成小根堆
         PriorityQueue<Integer> heap = new PriorityQueue<>();
         int index = 0;
+        // 先将 k 个值加入小根堆（k 小于 arr 长度的话）
         for(; index <= Math.min(arr.length, k); index++) {
             heap.add(arr[index]);
         }
         int i = 0;
+        // 因为每个元素移动的距离可以不超过k
+        // 所以将剩下的元素加入小根堆的话会很快
+        // 加入一个元素则弹出一个元素
+        // 若 k >= arr.lenght 这个循环就没用
         for(; index < arr.length; i ++, index++) {
             heap.add(arr[index]);
             arr[i] = heap.poll();
         }
+        // 处理剩下的堆数据
         while(!heap.isEmpty()) {
             arr[i++] = heap.poll();
         }

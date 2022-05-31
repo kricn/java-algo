@@ -46,12 +46,13 @@ public class RadixSort {
             for (i = R; i >= L; i --) {
                 j = getDigit(arr[i], d);
                 // 将对应位的数字放入辅助数组中
-                // 如 d = 1, count[5] = 7，则将 arr[i] 放入 bucket 的第 6 位中
+                // 如 d = 1, count[5] = 7，则将 arr[i] 放入 bucket 的第 6 位中，因为原数组是从 0 开始算的
                 // 对应磁片(5)上的值减少1
                 bucket[count[j] - 1] = arr[i];
                 count[j]--;
             }
             // 将辅助数组的值赋值给原数组
+            // 相当于更新原数组中需要更新数的位置
             for(i = L, j = 0; i <= R; i++, j++) {
                 arr[i] = bucket[i];
             }
