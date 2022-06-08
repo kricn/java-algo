@@ -61,6 +61,16 @@ public class Dijkstra {
         return minNode;
     }
 
+    public static class NodeRecord {
+        public Node node;
+        public int distance;
+
+        public NodeRecord(Node node, int distance) {
+            this.node = node;
+            this.distance = distance;
+        }
+    }
+
     public static class NodeHeap {
         // 将所有节点放入数组中
         private Node[] nodes;
@@ -70,8 +80,35 @@ public class Dijkstra {
         private HashMap<Node, Integer> distanceMap;
         private int size;
 
-        public static void addOrUpdateOrIgnore(Node head, int index) {
+        // 更新/添加节点到堆里，并记录最短距离
+        public void addOrUpdateOrIgnore(Node node, int distance) {
+            // 如果进入过堆，则比较两个距离的大小
+            if(inHeap(node)) {
+                distanceMap.put(node, Math.min(distanceMap.get(node), distance));
+            }
+            // 如果没有进入过堆，则插入元素并形成小根堆
+            if (!isEntered(node)) {
+                nodes[size] = node;
+                heapIndexMap.put(node, size);
+                distanceMap.put(node, distance);
+                insertHeapify(node, size++);
+            }
+        }
 
+        // 弹出小根堆
+        public NodeRecord pop() {
+            NodeRecord nodeRecord = new NodeRecord(nodes[0], distanceMap.get(nodes[0]));
+            // 交换头节点和最后一个节点，为了之后往下再次生成小根堆
+            swap(0, size - 1);
+            // 将头节点标记为被弹出过，nodes[size-1]其实就是小根堆的头节点，只是上一句交换了位置
+            heapIndexMap.put(nodes[size - 1], -1);
+            // 移除记录该节点的距离
+            distanceMap.remove(nodes[size - 1]);
+            // 释放头节点
+            nodes[size - 1] = null;
+            // 重新调整成小根堆
+            heapify(0, --size);
+            return nodeRecord;
         }
 
         public NodeHeap(int size) {
@@ -95,6 +132,10 @@ public class Dijkstra {
             while (left < size) {
                 int smallest = left + 1 < size && distanceMap.get(nodes[left + 1]) < distanceMap.get(nodes[left]) ? left + 1 : left;
                 smallest = distanceMap.get(nodes[smallest]) < distanceMap.get(nodes[index]) ? smallest : index;
+                if (smallest == index) break;
+                swap(smallest, index);
+                index = smallest;
+                left = index * 2 + 1;
             }
         }
 
