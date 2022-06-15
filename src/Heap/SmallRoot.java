@@ -70,9 +70,22 @@ public class SmallRoot {
         list.set(j, tmp);
     }
 
+    public int pop() {
+        swap(this.root, 0, this.heapSize - 1);
+        int res = this.root.get(heapSize - 1);
+        this.root.remove(heapSize - 1);
+        this.heapSize --;
+        heapify(0);
+        return res;
+    }
+
     public static void main(String[] args) {
         int[] arr = {4,9,7,10,2,3,100,5,12};
         SmallRoot smallRoot = new SmallRoot(arr);
         System.out.println(smallRoot.root);
+        while (smallRoot.heapSize != 0) {
+            System.out.println(smallRoot.pop());
+            System.out.println(smallRoot.root);
+        }
     }
 }
