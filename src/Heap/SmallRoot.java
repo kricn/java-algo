@@ -53,9 +53,9 @@ public class SmallRoot {
         }
     }
 
-    // 某个数在index能否向上移动，形成大根堆
+    // 某个数在index能否向上移动，形成小根堆
     public void heapInsert(int index) {
-        // 判断是否比父节点大
+        // 判断是否比父节点小
         while (this.root.get(index) < this.root.get((index - 1) / 2)) {
             swap(this.root, index , (index - 1) / 2);
             // 更新节点位置，即更新为父节点的下标
