@@ -14,4 +14,44 @@ package Other;
  * 不管 A 拿什么，B 都会拿 100, 返回分数 100
  */
 public class PredictTheWinner {
+
+    public static int win1(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return 0;
+        }
+        return Math.max(f(arr, 0, arr.length - 1), s(arr, 0, arr.length - 1));
+    }
+
+    /**
+     * 先手玩家 在 i 到 j 范围去尝试拿对自己最有利的
+     * @param arr 牌堆
+     * @param i 左边界
+     * @param j 右边界
+     * @return 得分
+     */
+    public static int f(int[] arr, int i, int j) {
+        if (i == j) { // base case
+            // 先选左边的
+            return arr[i];
+        }
+        // 在之后的 i + 1 到 j 里，先手玩家为后手，调用后手函数
+        // 同时也要选右边的牌做尝试，比较两次选择的大小
+        return Math.max(arr[i] + s(arr, i + 1, j), arr[j] + s(arr, i , j - 1));
+    }
+
+    /**
+     * 后玩家 在 i 到 j 范围去尝试拿对自己最有利的
+     * @param arr 牌堆
+     * @param i 左边界
+     * @param j 右边界
+     * @return 得分
+     */
+    public static int s(int[] arr, int i, int j) {
+        if (i == j) {
+            return 0;
+        }
+        // 因为是后手，所以在别人选完后，会留下最不优的情况，返回最小值
+        return Math.min(f(arr, i + 1, j), f(arr, i , j - 1));
+    }
+
 }
