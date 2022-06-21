@@ -54,4 +54,11 @@ public class PredictTheWinner {
         return Math.min(f(arr, i + 1, j), f(arr, i , j - 1));
     }
 
+    public static void main(String[] args) {
+        int[] arr = {1,4,100,2};
+        int res = win1(arr);
+
+        System.out.println(res);
+    }
+
 }
