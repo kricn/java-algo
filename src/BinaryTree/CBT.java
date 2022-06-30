@@ -3,7 +3,7 @@ package BinaryTree;
 import java.util.LinkedList;
 
 /**
- * 判断一个二叉树是否为二叉搜索树(比根节点小的在左边，大的在右边)
+ * 判断一个二叉树是否为完全二叉树(每一个节点都是完全二叉树)
  */
 public class CBT {
 

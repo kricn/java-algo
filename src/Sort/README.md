@@ -6,7 +6,7 @@
 ### [归并排序](/Sort/MergeSort.java)
 ### [基数排序](/Sort/RadixSort.java)
 
-### [小数问题](/Sort/smallSum)
+### [小数问题](/Sort/smallSum.java)
 
 ### 排序算法的稳定性
 ![排序算法的稳定性](/file/排序算法的稳定性.jpg)

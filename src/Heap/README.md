@@ -1,5 +1,5 @@
 ## 堆
 
-## [小根堆](/src/Heap/SmallRoot.java)
+## [小根堆](./SmallRoot.java)
 
-## [大根堆](/src/Heap/LargeRoot.java)
+## [大根堆](./LargeRoot.java)
