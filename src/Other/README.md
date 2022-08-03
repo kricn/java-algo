@@ -25,3 +25,7 @@
 ### [位图](./BitMap.java)
 
 ### [岛屿为你](./Islands.java)
+
+## [KMP算法](./KMP.java)
+
+## [求字符串中啊长的回文字符串(Manacher算法)](./Manacher.java)
