@@ -29,3 +29,5 @@
 ## [KMP算法](./KMP.java)
 
 ## [求字符串中啊长的回文字符串(Manacher算法)](./Manacher.java)
+
+# [位运算实现四则运算](./AddMinusMultiDivideByBit.java)
