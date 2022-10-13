@@ -1,4 +1,4 @@
-package Other;
+package DP;
 
 /**
  * 给定一个整形数组 arr, 代表数值不同的纸牌连成一条线。玩家 A 和玩家 B 依次拿走每张牌，
@@ -15,6 +15,7 @@ package Other;
  */
 public class PredictTheWinner {
 
+    /************ 递归版本 ***********************/
     public static int win1(int[] arr) {
         if (arr == null || arr.length == 0) {
             return 0;
@@ -54,9 +55,43 @@ public class PredictTheWinner {
         return Math.min(f(arr, i + 1, j), f(arr, i , j - 1));
     }
 
+    /************ 动态规划 ***********************/
+    public static int win2(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return 0;
+        }
+        // 先手表
+        int[][] f = new int[arr.length][arr.length];
+        // 后手表
+        int[][] s = new int[arr.length][arr.length];
+        // 根据递归 base case 填写表位置信息
+        // 当行==列时，根据先手递归函数得
+        for (int i = 0; i < arr.length; i ++) {
+            f[i][i] = arr[i];
+        }
+        // 后手函数表当行 == 列的时候为 0 不用处理
+        // 因为行的数取了，列就不行再取了，所以行从0开始，列从 1 开始
+        // 即从对角线开始
+        int row = 0, col = 1;
+        while (col < arr.length) {
+            int i = row;
+            int j = col;
+            // 根据递归调用
+            // 先手表当前位置为 当前数字加上后手表对应位置数字再做比较，见先手函数 f 的调用
+            while (i < arr.length && j < arr.length) {
+                f[i][j] = Math.max(arr[i] + s[i + 1][j], arr[j] + s[i][j - 1]);
+                s[i][j] = Math.min(f[i + 1][j], f[i][j - 1]);
+                i ++;
+                j ++;
+            }
+            col ++;
+        }
+        return Math.max(f[0][arr.length - 1], s[0][arr.length - 1]);
+    }
+
     public static void main(String[] args) {
         int[] arr = {1,4,100,2};
-        int res = win1(arr);
+        int res = win2(arr);
 
         System.out.println(res);
     }
