@@ -7,3 +7,5 @@
 ### [猜测抽纸牌赢家](./PredictTheWinner.java)
 
 ### [寻找终点的马棋子](./HorseJump.java)
+
+### [找到目标值的硬币方式（斜率优化）](./CoinsWay.java)
